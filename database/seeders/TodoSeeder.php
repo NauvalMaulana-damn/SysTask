@@ -2,21 +2,24 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use App\Models\User;
+use App\Models\Todo;
+use Illuminate\Support\Facades\Hash;
 
 class TodoSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        DB::table('todos')->insert([[
-            'user_id' => 1,
-            'title' => 'Mengerjakan tugas',
-            'status' => 'proses'
-        ]]);
+        $user = User::firstOrCreate(
+            ['email' => 'test@example.com'],
+            ['name' => 'Test User', 'password' => Hash::make('password')]
+        );
+
+        Todo::create([
+            'title'   => 'Mengerjakan tugas',
+            'status'  => 'proses',
+            'user_id' => $user->id,
+        ]);
     }
 }

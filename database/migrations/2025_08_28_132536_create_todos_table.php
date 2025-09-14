@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('todos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->cascadeOnUpdate();
+            $table->foreignId('user_id')
+                  ->constrained()
+                  ->cascadeOnUpdate();
             $table->string('title');
             $table->enum('status', ['proses', 'selesai'])->default('proses');
             $table->timestamps();
